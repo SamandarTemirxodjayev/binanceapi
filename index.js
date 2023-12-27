@@ -1,13 +1,12 @@
 const axios = require('axios');
+const crypto = require('crypto');
 
 async function getSpotBalance(apiKey, secretKey) {
  const timestamp = Date.now();
- const signature = Buffer.from(
-    require('crypto')
-      .createHmac('sha256', secretKey)
-      .update(`${timestamp}`)
-      .digest('hex')
- ).toString('base64');
+ const signature = crypto
+    .createHmac('sha256', secretKey)
+    .update(`${timestamp}`)
+    .digest('hex');
 
  const url = 'https://api.binance.com/api/v3/account';
  const params = {
